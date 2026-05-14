@@ -1,0 +1,11 @@
+section text:
+global _start:
+    mov 5, i0
+    mov 2, i1
+    add i0, i1, i2       ; i2 = 7
+    add i2, 48, a0       ; a0 = 55 = '7'  ← this NOW works with the patch
+    int 0x02             ; print '7'
+    mov 10, a0
+    int 0x02             ; print newline
+    mov 0, a0
+    int 0x04

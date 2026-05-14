@@ -1,0 +1,14 @@
+; test_divzero.cxis: 5 / 0 — div_zero handled, CPU must not hang
+section text:
+global _start:
+    mov 5, i0
+    mov 0, i1
+    div i0, i1, i2       ; div_zero → i2 = 0xFFFFFFFF, no hang
+    mov 79, a0           ; 'O'
+    int 0x02
+    mov 75, a0           ; 'K'
+    int 0x02
+    mov 10, a0
+    int 0x02
+    mov 0, a0
+    int 0x04

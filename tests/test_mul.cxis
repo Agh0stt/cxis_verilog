@@ -1,0 +1,17 @@
+; test_mul.cxis: 6 * 7 = 42 — uses hardware MUL unit (32 cycles)
+section text:
+global _start:
+    mov 6, i0
+    mov 7, i1
+    mul i0, i1, i2       ; i2 = 42  (hardware MUL)
+    div i2, 10, i3       ; i3 = 4   (tens digit)
+    mul i3, 10, i4       ; i4 = 40
+    sub i2, i4, i5       ; i5 = 2   (units digit)
+    add i3, 48, a0       ; '4'
+    int 0x02
+    add i5, 48, a0       ; '2'
+    int 0x02
+    mov 10, a0
+    int 0x02
+    mov 0, a0
+    int 0x04

@@ -1,0 +1,55 @@
+; fpu_add.cxis  —  3.142 + 3.14, print result
+; Expected: 6.2819 or 6.2820 (f32 rounding)
+; No push/pop, no loops — fully unrolled
+
+section text:
+global _start:
+
+    fmov  3.142, f0
+    fmov  3.14,  f1
+    fadd  f0, f1, f2
+
+    ftoi  f2, i0
+    itof  i0, f3
+    fsub  f2, f3, f4
+    fmov  10000.0, f5
+    fmul  f4, f5, f4
+    ftoi  f4, i1
+
+    ; print integer digit
+    add   i0, 48, a0
+    int   0x02
+
+    ; print '.'
+    mov   46, a0
+    int   0x02
+
+    ; digit 1 (thousands)
+    div   i1, 1000, i10
+    mul   i10, 1000, i11
+    sub   i1, i11, i1
+    add   i10, 48, a0
+    int   0x02
+
+    ; digit 2 (hundreds)
+    div   i1, 100, i10
+    mul   i10, 100, i11
+    sub   i1, i11, i1
+    add   i10, 48, a0
+    int   0x02
+
+    ; digit 3 (tens)
+    div   i1, 10, i10
+    mul   i10, 10, i11
+    sub   i1, i11, i1
+    add   i10, 48, a0
+    int   0x02
+
+    ; digit 4 (units)
+    add   i1, 48, a0
+    int   0x02
+
+    mov   10, a0
+    int   0x02
+    mov   0, a0
+    int   0x04

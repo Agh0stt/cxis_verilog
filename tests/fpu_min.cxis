@@ -1,0 +1,13 @@
+; test itof: load 6 into i0, convert to f3, then add f3+f3=12.0, ftoi=12, print '0'+12='<'
+section text:
+global _start:
+    mov   6, i0
+    itof  i0, f3
+    fadd  f3, f3, f4
+    ftoi  f4, i2
+    add   i2, 48, a0
+    int   0x02
+    mov   10, a0
+    int   0x02
+    mov   0, a0
+    int   0x04

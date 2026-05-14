@@ -1,0 +1,11 @@
+section text:
+global _start:
+    mov 9, i0
+    mov 3, i1
+    sub i0, i1, i2
+    add i2, 48, a0
+    int 0x02
+    mov 10, a0
+    int 0x02
+    mov 0, a0
+    int 0x04

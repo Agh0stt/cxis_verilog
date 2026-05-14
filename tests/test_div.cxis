@@ -1,0 +1,12 @@
+; test_div.cxis: 81 / 9 = 9 — uses hardware DIV unit (32 cycles)
+section text:
+global _start:
+    mov 81, i0
+    mov 9,  i1
+    div i0, i1, i2       ; i2 = 9  (hardware DIV)
+    add i2, 48, a0       ; '9'
+    int 0x02
+    mov 10, a0
+    int 0x02
+    mov 0, a0
+    int 0x04
